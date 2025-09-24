@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Theme from "./Theme";
 
 const Navbar = () => {
   return (
@@ -13,7 +14,17 @@ const Navbar = () => {
           height={30}
           className="object-contain"
         />
+
+        <p className="h2-bold font-space-grotesk text-dark-100 dark:text-light-900 max-sm:hidden">
+          Dev <span className="text-primary-500">Flow</span>
+        </p>
       </Link>
+
+      <p>Global Search</p>
+
+      <div className="flex-between gap-5">
+        <Theme />
+      </div>
     </nav>
   );
 };
