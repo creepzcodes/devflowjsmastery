@@ -1,34 +1,38 @@
-import { auth } from "@/auth";
+import Link from "next/link";
+
+import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
-import Link from "next/link";
 
 const questions = [
   {
     _id: "1",
     title: "How to learn React?",
-    description: "I want to learn react, can anyone Help me?",
+    description: "I want to learn React, can anyone help me?",
     tags: [
       { _id: "1", name: "React" },
-      { _id: "2", name: "Typescript" },
+      { _id: "2", name: "JavaScript" },
     ],
     author: { _id: "1", name: "John Doe" },
     upvotes: 10,
     answers: 5,
     views: 100,
-    cratedAt: new Date(),
+    createdAt: new Date(),
   },
   {
     _id: "2",
-    title: "I have a problem in Java",
-    description: "I want to learn Java, can anyone Help me?",
-    tags: [{ _id: "3", name: "Java" }],
+    title: "How to learn JavaScript?",
+    description: "I want to learn JavaScript, can anyone help me?",
+    tags: [
+      { _id: "1", name: "JavaScript" },
+      { _id: "2", name: "JavaScript" },
+    ],
     author: { _id: "1", name: "John Doe" },
     upvotes: 10,
     answers: 5,
     views: 100,
-    cratedAt: new Date(),
+    createdAt: new Date(),
   },
 ];
 
@@ -37,18 +41,21 @@ interface SearchParams {
 }
 
 const Home = async ({ searchParams }: SearchParams) => {
-  const { query = "" } = await searchParams;
+  const { query = "", filter = "" } = await searchParams;
 
-  const filteredQuestions = questions.filter((question) =>
-    question.title.toLowerCase().includes(query?.toLowerCase())
-  );
+  const filteredQuestions = questions.filter((question) => {
+    const matchesQuery = question.title
+      .toLowerCase()
+      .includes(query.toLowerCase());
+    const matchesFilter = filter
+      ? question.tags[0].name.toLowerCase() === filter.toLowerCase()
+      : true;
+    return matchesQuery && matchesFilter;
+  });
 
   return (
     <>
-      <section
-        className="w-full flex flex-col-reverse sm:flex-row justify-between
-      gap-4 sm:items-center"
-      >
+      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
         <Button
@@ -66,10 +73,10 @@ const Home = async ({ searchParams }: SearchParams) => {
           otherClasses="flex-1"
         />
       </section>
-      {/*HomeFilter*/}
+      <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {filteredQuestions.map((questions) => (
-          <h1 key={questions._id}>{questions.title}</h1>
+        {filteredQuestions.map((question) => (
+          <h1 key={question._id}>{question.title}</h1>
         ))}
       </div>
     </>
