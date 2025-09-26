@@ -4,6 +4,7 @@ import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import QuestionCard from "@/components/cards/QuestionCard";
 
 const questions = [
   {
@@ -14,7 +15,12 @@ const questions = [
       { _id: "1", name: "React" },
       { _id: "2", name: "JavaScript" },
     ],
-    author: { _id: "1", name: "John Doe" },
+    author: {
+      _id: "1",
+      name: "John Doe",
+      image:
+        "https://imgs.search.brave.com/eyRY5uaiLGM5frGLLGO6FeKUxOITJRXh-mf56aSPzWY/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWd2/My5mb3Rvci5jb20v/aW1hZ2VzL2hvbWVw/YWdlLWZlYXR1cmUt/Y2FyZC9mb3Rvci0z/ZC1hdmF0YXIuanBn",
+    },
     upvotes: 10,
     answers: 5,
     views: 100,
@@ -28,7 +34,12 @@ const questions = [
       { _id: "1", name: "JavaScript" },
       { _id: "2", name: "JavaScript" },
     ],
-    author: { _id: "1", name: "John Doe" },
+    author: {
+      _id: "1",
+      name: "John Doe",
+      image:
+        "https://imgs.search.brave.com/zCBTybWd27lVr69cxKO1Wz7-YD9cYkLb_nCJQV5ttjg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWd2/My5mb3Rvci5jb20v/aW1hZ2VzL2hvbWVw/YWdlLWZlYXR1cmUt/Y2FyZC9mb3Rvci1j/YXJ0b29uLWF2YXRh/ci5qcGc",
+    },
     upvotes: 10,
     answers: 5,
     views: 100,
@@ -76,7 +87,7 @@ const Home = async ({ searchParams }: SearchParams) => {
       <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question._id}>{question.title}</h1>
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
